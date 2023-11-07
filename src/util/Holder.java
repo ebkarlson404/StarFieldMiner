@@ -10,30 +10,30 @@ import org.jetbrains.annotations.Nullable;
  * @author Eric Karlson
  */
 public class Holder<T> {
-    private T value;
+  private T value;
 
-    public Holder() {
-        this.value = null;
-    }
+  public Holder() {
+    this.value = null;
+  }
 
-    public Holder(T value) {
-        this.value = value;
-    }
+  public Holder(T value) {
+    this.value = value;
+  }
 
-    @Override
-    public String toString() {
-        return (null == value) ? null : value.toString();
-    }
+  @Override
+  public String toString() {
+    return (null == value) ? null : value.toString();
+  }
 
-    public void set(@Nullable T value) {
-        this.value = value;
-    }
+  public void set(@Nullable T value) {
+    this.value = value;
+  }
 
-    public @Nullable T get() {
-        return value;
-    }
+  public @Nullable T get() {
+    return value;
+  }
 
-    public @NotNull T getWithDefault(@NotNull T dflt) {
-        return (null != value) ? value : dflt;
-    }
+  public @NotNull T getWithDefault(@NotNull T dflt) {
+    return (null != value) ? value : dflt;
+  }
 }

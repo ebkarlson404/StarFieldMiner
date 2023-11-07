@@ -1,6 +1,7 @@
 package datamodel;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.jetbrains.annotations.NotNull;
 import parser.ESMJsonParser;
 
 /**
@@ -9,10 +10,15 @@ import parser.ESMJsonParser;
  * @author Eric Karlson
  */
 public class DMGTRecord extends Record {
-    static final String SHIELD_FID = "0001EDE8";
-    static final String ELECTROMAGNETIC_FID = "00023190";
+  public static final String SHIELD_FID = "0001EDE8";
+  public static final String ELECTROMAGNETIC_FID = "00023190";
 
-    public DMGTRecord(String formId, String editorId, String signature, JsonNode node, ESMJsonParser parser) {
-        super(formId, editorId, signature, node, parser);
-    }
+  public DMGTRecord(
+      @NotNull String formId,
+      @NotNull String editorId,
+      @NotNull String signature,
+      @NotNull JsonNode node,
+      ESMJsonParser.@NotNull ParserRegistrar registrar) {
+    super(formId, editorId, signature, node, registrar);
+  }
 }

@@ -1,6 +1,7 @@
 package datamodel;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.jetbrains.annotations.NotNull;
 import parser.ESMJsonParser;
 
 /**
@@ -8,21 +9,28 @@ import parser.ESMJsonParser;
  *
  * @author Eric Karlson
  */
-@ESMGroup("AMMO")
+@ESMGroup(value = "AMMO")
 public class AMMORecord extends Record {
-    private static final String FLD_DNAM = "DNAM - DNAM";
-    private static final String FLD_PROJECTILE = "Projectile";
+  private static final String FLD_DNAM = "DNAM - DNAM";
+  private static final String FLD_PROJECTILE = "Projectile";
 
-    public AMMORecord(String formId, String editorId, String signature, JsonNode node, ESMJsonParser parser) {
-        super(formId, editorId, signature, node, parser);
-    }
+  public AMMORecord(
+      @NotNull String formId,
+      @NotNull String editorId,
+      @NotNull String signature,
+      @NotNull JsonNode node,
+      ESMJsonParser.@NotNull ParserRegistrar registrar) {
+    super(formId, editorId, signature, node, registrar);
+  }
 
-    public PROJRecord getPROJRecord() {
-        JsonNode dnam = node.get(FLD_DNAM);
-        if (null == dnam) {
-            return null;
-        }
-        JsonNode proj = dnam.get(FLD_PROJECTILE);
-        return (null != proj && proj.isTextual()) ? parser.findRecordByFormId(proj.asText(), PROJRecord.class) : null;
+  public PROJRecord getPROJRecord() {
+    JsonNode dnam = node.get(FLD_DNAM);
+    if (null == dnam) {
+      return null;
     }
+    JsonNode proj = dnam.get(FLD_PROJECTILE);
+    return (null != proj && proj.isTextual())
+        ? parser.findRecordByFormId(proj.asText(), PROJRecord.class)
+        : null;
+  }
 }
