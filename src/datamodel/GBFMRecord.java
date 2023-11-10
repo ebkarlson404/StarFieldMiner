@@ -9,7 +9,6 @@ import java.util.function.Predicate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import parser.ESMJsonParser;
-import parser.JsonNodeWrapper;
 import parser.Util;
 import util.Assert;
 import util.ESMKeyValueMap;
@@ -23,9 +22,11 @@ import util.ESMKeyValueMap;
 public class GBFMRecord extends Record {
   private static final String FLD_COMPONENTS = "Components";
   private static final String FLD_COMPONENT = "Component";
+  private static final String FLD_COMPONENT_DATA_FULL_NAME = "Component Data - Fullname";
   private static final String COMP_TYPE_PROPERTY_SHEET = "BGSPropertySheet_Component";
   private static final String COMP_TYPE_LINKED_FORMS = "BGSFormLinkData_Component";
   private static final String COMP_TYPE_KEYWORDS = "BGSKeywordForm_Component";
+  private static final String COMP_TYPE_TES_FULL_NAME = "TESFullName_Component";
 
   /**
    * Encapsulates a <i>PropertySheet</i> found in a BGSPropertySheet_Component component. A
@@ -91,6 +92,17 @@ public class GBFMRecord extends Record {
         return dflt;
       }
       return Double.parseDouble(res);
+    }
+  }
+
+  /** Encapsulates a <i>Full Name Data</i> found in a TESFullName_Component component. */
+  public static class FullNameDataBlock extends JsonNodeWrapper {
+    private FullNameDataBlock(JsonNode node) {
+      super(node);
+    }
+
+    public String getFullName() {
+      return getPropertyAsString(FLD_FULL_NAME);
     }
   }
 
@@ -208,6 +220,17 @@ public class GBFMRecord extends Record {
       // No matching keyword found
       return null;
     }
+
+    /**
+     * Retrieves the {@link FullNameDataBlock} from this {@link Component}, if there is one. Only
+     * components of type <i>TESFullName_Component</i> have a {@link PropertySheet}.
+     *
+     * @return This Component's {@link FullNameDataBlock} or {@code null} if there is none
+     */
+    public @Nullable FullNameDataBlock getFullnameDataBlock() {
+      JsonNode data = node.get(FLD_COMPONENT_DATA_FULL_NAME);
+      return (null != data) ? new FullNameDataBlock(data) : null;
+    }
   }
 
   public GBFMRecord(
@@ -309,5 +332,19 @@ public class GBFMRecord extends Record {
         return new Component(iter.next().get(FLD_COMPONENT), parser);
       }
     };
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String getFullName() {
+    Component comp = findComponent(COMP_TYPE_TES_FULL_NAME);
+    if (null == comp) {
+      return null;
+    }
+    FullNameDataBlock data = comp.getFullnameDataBlock();
+    if (null == data) {
+      return null;
+    }
+    return data.getFullName();
   }
 }

@@ -2,9 +2,7 @@ package datamodel;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import parser.ESMJsonParser;
-import parser.JsonNodeWrapper;
 
 /**
  * Encapsulates properties that are common across all ESM Record Objects
@@ -12,7 +10,6 @@ import parser.JsonNodeWrapper;
  * @author Eric Karlson
  */
 public class Record extends JsonNodeWrapper {
-  static final String FLD_FULL_NAME = "FULL - Name";
   public static String FLD_RECORD_HDR = "Record Header";
   public static String FLD_SIGNATURE = "Signature";
   public static String FLD_FORM_ID = "FormID";
@@ -54,10 +51,6 @@ public class Record extends JsonNodeWrapper {
 
   public @NotNull String getSignature() {
     return signature;
-  }
-
-  public @Nullable String getFullName() {
-    return getPropertyAsString(FLD_FULL_NAME);
   }
 
   public @NotNull ESMJsonParser getParser() {

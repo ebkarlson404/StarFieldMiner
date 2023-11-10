@@ -1,4 +1,4 @@
-package parser;
+package datamodel;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +11,8 @@ import org.jetbrains.annotations.Nullable;
  * @author Eric Karlson
  */
 public class JsonNodeWrapper {
+  static final String FLD_FULL_NAME = "FULL - Name";
+
   /** The wrapped {@link JsonNode} */
   protected final JsonNode node;
 
@@ -35,5 +37,9 @@ public class JsonNodeWrapper {
   protected @Nullable String getPropertyAsString(@NotNull String propName) {
     JsonNode value = node.get(propName);
     return (null != value) ? value.asText() : null;
+  }
+
+  public @Nullable String getFullName() {
+    return getPropertyAsString(FLD_FULL_NAME);
   }
 }

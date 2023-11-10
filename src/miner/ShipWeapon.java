@@ -16,6 +16,9 @@ public class ShipWeapon {
   private final String model;
   private final String weaponClass;
   private final String category;
+  private final int magazine;
+  private final int volley;
+  private final boolean turret;
   private final int cost;
   private final int hull;
   private final int mass;
@@ -34,8 +37,7 @@ public class ShipWeapon {
   private final double rof;
   private final double rechargeDelay;
   private final double rechargeTime;
-  private final int magazine;
-  private final boolean turret;
+  private final String cobjFormId;
 
   /**
    * Data mines a COBJ record to extract all relevant Ship Weapon Stats. Should only be called on
@@ -81,6 +83,7 @@ public class ShipWeapon {
             });
     this.minLevel = playerLevel.getWithDefault(1);
     this.cost = cobj.getCost();
+    this.cobjFormId = cobj.getFormId();
 
     // Data mine the required perks (including min starship eng)
     Holder<Integer> starshipEng = new Holder<>();
@@ -107,6 +110,7 @@ public class ShipWeapon {
         Assert.assertNotNull(
             cobj.getCreatedObject(GBFMRecord.class), "Missing Created Object in " + cobj);
     this.make = Assert.assertNotNull(gbfm.getManufacturer(), "No weapon make found in " + gbfm);
+    this.model = Assert.assertNotNull(gbfm.getFullName(), "No weapon name found in " + gbfm);
     this.weaponClass =
         Assert.assertNotNull(gbfm.getShipModuleClass(), "No weapon class found in " + gbfm);
 
@@ -119,7 +123,7 @@ public class ShipWeapon {
             AVIFRecord.SPACESHIP_PART_MASS_FID, "Missing mass data in " + gbfm);
     this.crew =
         props.getPropertyValueAsDouble(
-            AVIFRecord.SPACESHIP_CREW_RATING_FID, "Missing crew data in " + gbfm, 0.25);
+            AVIFRecord.SPACESHIP_CREW_RATING_FID, "Missing crew data in " + gbfm, 0.0);
     this.health =
         props.getPropertyValueAsInt(
             AVIFRecord.SHIP_SYSTEM_WEAPON_HEALTH_FID, "Missing health data in " + gbfm);
@@ -130,7 +134,6 @@ public class ShipWeapon {
     // Data mine the WEAP record to get everything else but projectile speed
     WEAPRecord weap =
         Assert.assertNotNull(gbfm.getWEAPRecord(), "Could not find WEAP record in " + gbfm);
-    this.model = weap.getFullName();
     this.turret = weap.isSpaceshipTurrentWeapon();
     this.category = weap.getSpaceshipWeaponCategory();
     int partialHullDmg = weap.getPhysicalDamage();
@@ -141,6 +144,7 @@ public class ShipWeapon {
     this.rechargeDelay = weap.getRechargeDelay();
     this.rechargeTime = weap.getRechargeTime();
     this.magazine = weap.getAmmoCapacity();
+    this.volley = weap.getBurstCount();
     this.rof = weap.getShotsPerSecond();
 
     // Find this weapon's AMMO information, and from that get the PROJ information
@@ -182,18 +186,21 @@ public class ShipWeapon {
 
   public static void emitHeaders(PrintStream output) {
     output.println(
-        "Make|Model|Class|Category|Cost|Hull|Mass|Health|Crew Capacity|Max Power|"
+        "Make|Model|Class|Category|Magazine|Volley|Is Turret|Cost|Hull|Mass|Health|Crew Capacity|Max Power|"
             + "Required Level|Required Starship Eng|Required Perk|Hull Dmg|Shield Dmg|EM Dmg|Crit Damage|Range|"
-            + "Speed|ROF|Recharge Delay|Recharge Time|Magazine|Is Turret");
+            + "Speed|ROF|Recharge Delay|Recharge Time|COBJ FormID");
   }
 
   public void emitAsCSV(PrintStream output) {
     output.printf(
-        "%s|%s|%s|%s|%d|%d|%d|%d|%f|%d|%d|%d|%s|%d|%d|%d|%f|%d|%d|%f|%f|%f|%d|%s\n",
+        "%s|%s|%s|%s|%d|%d|%s|%d|%d|%d|%d|%f|%d|%d|%d|%s|%d|%d|%d|%f|%d|%d|%f|%f|%f|'%s\n",
         make,
         model,
         weaponClass,
         category,
+        magazine,
+        volley,
+        turret ? "X" : "",
         cost,
         hull,
         mass,
@@ -212,7 +219,6 @@ public class ShipWeapon {
         rof,
         rechargeDelay,
         rechargeTime,
-        magazine,
-        turret ? "X" : "");
+        cobjFormId);
   }
 }

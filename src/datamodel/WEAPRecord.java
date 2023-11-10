@@ -35,6 +35,7 @@ public class WEAPRecord extends Record {
   private static final String FLD_AMMO_TYPE = "Ammo Type";
   private static final String FLD_WFIR = "WFIR - Firing";
   private static final String FLD_SHOTS_PER_SECOND = "Shots Per Second";
+  private static final String FLD_BURST_COUNT = "Burst count";
 
   /** Maps Space Ship Class KEYW Form ID's to human-readable descriptors */
   private static final Map<String, String> SHIP_CLASS_KEYW_FORMID_TO_READABLE = new HashMap<>();
@@ -218,6 +219,21 @@ public class WEAPRecord extends Record {
     }
     JsonNode rof = wfir.get(FLD_SHOTS_PER_SECOND);
     return Util.asDouble(rof, 0.0);
+  }
+
+  public int getBurstCount() {
+    JsonNode wfir = node.get(FLD_WFIR);
+    if (null == wfir) {
+      return 1;
+    }
+    JsonNode burst = wfir.get(FLD_BURST_COUNT);
+    int cnt = Util.asInt(burst, 1);
+
+    // For some reason, many GBFM's have an explicit 'Burst Count' of '0' - not sure why.
+    // Maybe in the engine a count of '0' is different than '1', but I'm not sure how it
+    // could be different.
+    // In any case, we map '0' to '1' here in terms of how it is used in the exported data.
+    return (0 == cnt) ? 1 : cnt;
   }
 
   public @Nullable AMMORecord getAMMORecord() {
