@@ -42,7 +42,6 @@ public class GBFMRecord extends Record {
 
     private PropertySheet(JsonNode node, ESMJsonParser parser) {
       super(node);
-      this.parser = parser;
 
       // Extract all the properties and store them in a map for easy access
       // This is another one of those cases where the 'serialize-command-json'
