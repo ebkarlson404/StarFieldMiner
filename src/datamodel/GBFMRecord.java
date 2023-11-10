@@ -38,8 +38,6 @@ public class GBFMRecord extends Record {
     private static final String FLD_ACTOR_VALUE = "Actor Value";
     private static final String FLD_VALUE = "Value";
 
-    private final ESMJsonParser parser;
-
     private final Map<String, String> propertyMap = new HashMap<>();
 
     private PropertySheet(JsonNode node, ESMJsonParser parser) {

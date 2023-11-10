@@ -67,15 +67,22 @@ public class ShipWeapon {
               } else if (null != (glob = c.getSubjectGlobalCheckTarget())) {
                 otherPerks.append(sep);
                 sep.set(", ");
-                if (GLOBRecord.UC02_UC_SHIP_COMPONENTS_UNLOCKED.equals(glob)) {
-                  otherPerks.append("Vanguard:Grunt Work");
-                } else if (GLOBRecord.SHIP_BUILDER_ALLOW_LARGE_MODS.equals(glob)) {
-                  otherPerks.append("[enable large ship modules]");
-                } else if (GLOBRecord.SHIP_BUILDER_TEST_MODS.equals(glob)) {
-                  otherPerks.append("[test ship modules]");
-                } else {
-                  otherPerks.append("[GLOB:" + glob + "]");
-                }
+                  switch (glob) {
+                      case GLOBRecord.UC02_UC_SHIP_COMPONENTS_UNLOCKED:
+                          otherPerks.append("Vanguard:Grunt Work");
+                          break;
+                      case GLOBRecord.SHIP_BUILDER_ALLOW_LARGE_MODS:
+                          otherPerks.append("[enable large ship modules]");
+                          break;
+                      case GLOBRecord.SHIP_BUILDER_TEST_MODS:
+                          otherPerks.append("[test ship modules]");
+                          break;
+                      default:
+                          otherPerks.append("[GLOB:");
+                          otherPerks.append(glob);
+                          otherPerks.append("]");
+                          break;
+                  }
               } else if (!c.isVendorAvailabilityCondition()) {
                 // Unknown condition - report it and then skip it
                 System.err.println("Unknown Condition in " + cobj + ": " + c);
