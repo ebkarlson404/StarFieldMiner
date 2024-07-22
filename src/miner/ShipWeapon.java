@@ -113,9 +113,11 @@ public class ShipWeapon {
     this.requiredPerk = otherPerks.toString();
 
     // Data mine the GBFM associated with this COBJ to get the make and class
-    GBFMRecord gbfm =
-        Assert.assertNotNull(
-            cobj.getCreatedObject(GBFMRecord.class), "Missing Created Object in " + cobj);
+    if ("02003E99".equals(cobj.getFormId())) {
+      System.out.println("Bad Form");
+    }
+    GBFMRecord gbfm = cobj.getCreatedObject(GBFMRecord.class);
+    Assert.assertNotNull(gbfm, "Missing Created Object in " + cobj);
     this.make = Assert.assertNotNull(gbfm.getManufacturer(), "No weapon make found in " + gbfm);
     this.model = Assert.assertNotNull(gbfm.getFullName(), "No weapon name found in " + gbfm);
     this.weaponClass =
@@ -124,7 +126,7 @@ public class ShipWeapon {
     // Data mine the PropertySheet to get hull, mass, crew, health and max power
     GBFMRecord.PropertySheet props =
         Assert.assertNotNull(gbfm.getPropertySheet(), "Missing Property Sheet in " + gbfm);
-    this.hull = props.getPropertyValueAsInt(AVIFRecord.HEALTH_FID, "Missing hull data in " + gbfm);
+    this.hull = props.getPropertyValueAsInt(AVIFRecord.HEALTH_FID, 0);
     this.mass =
         props.getPropertyValueAsInt(
             AVIFRecord.SPACESHIP_PART_MASS_FID, "Missing mass data in " + gbfm);

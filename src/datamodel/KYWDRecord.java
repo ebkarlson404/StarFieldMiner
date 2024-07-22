@@ -13,7 +13,7 @@ import parser.ESMJsonParser;
 public class KYWDRecord extends Record {
   private static final String FLD_KEYWORD_TYPE = "TNAM - Type";
   private static final String KEYWORD_TYPE_SHIP_MODULE_CLASS = "Ship Module Class";
-  private static final String KEYWORD_TYPE_MANUFACTURER = "Unknown 31";
+  private static final String KEYWORD_TYPE_MANUFACTURER = "Manufacturer";
   public static final String CATEGORY_SHIPMOD_WEAPON_FID = "002C155B";
   public static final String SPACESHIP_PART_LINKED_WEAPON_FID = "000179DD";
   public static final String SPACESHIP_ENERGY_WEAPON_FID = "0002226A";
@@ -43,6 +43,7 @@ public class KYWDRecord extends Record {
    * @return {#code true} if this KEYW is used to convey the name of a ship module manufacturer
    */
   public boolean isShipModuleCorpNameKeyword() {
-    return KEYWORD_TYPE_MANUFACTURER.equals(getPropertyAsString(FLD_KEYWORD_TYPE));
+    String prop = getPropertyAsString(FLD_KEYWORD_TYPE);
+    return KEYWORD_TYPE_MANUFACTURER.equals(prop);
   }
 }

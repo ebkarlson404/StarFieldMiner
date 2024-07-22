@@ -44,7 +44,7 @@ public class EXPLRecord extends Record {
     }
 
     // This is another example of where the serialize-command-json script generates JSON
-    // Objects that have repeating property names.  Use our disambiguaton logic to access
+    // Objects that have repeating property names.  Use our disambiguation logic to access
     // each repeated property with a unique name.
     JsonNode dmg;
     for (int idx = 1;

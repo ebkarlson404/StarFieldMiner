@@ -12,6 +12,7 @@ import java.util.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import util.Assert;
+import util.Holder;
 
 /**
  * Top-level parser for processing an ESM Dump File.
@@ -67,7 +68,9 @@ public class ESMJsonParser {
    * @param filename The name of the ESM Json Dump File to read
    * @throws IOException If there is some problem reading the file
    */
-  public void parse(@NotNull String filename) throws IOException {
+  public void parse(@NotNull String filename, @NotNull Holder<String> current) throws IOException {
+    current.set(filename);
+
     // Customized JsonNodeFactory that replaces JsonObject with our specialized ESMObjectNode
     // which handles Json Objects with repeated property values (something that happens with
     // xEdit and the serialize-command-json scripts)

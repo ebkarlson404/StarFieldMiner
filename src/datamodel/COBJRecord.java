@@ -20,7 +20,7 @@ public class COBJRecord extends Record {
   private static final String FLD_REQUIRED_PERK_FMT = "Required Perk #%d";
   private static final String FLD_CREATED_OBJECT = "CNAM - Created Object";
   private static final String FLD_COST_DATA = "DATA - Value";
-  private static final String FLD_CATEGORY = "FNAM - Category";
+  private static final String FLD_RECIPE_FILTERS = "FNAM - Recipe Filters";
   private static final String FLD_KEYWORD = "Keyword";
 
   public static class Condition extends JsonNodeWrapper {
@@ -270,7 +270,7 @@ public class COBJRecord extends Record {
    * @return The FormID for this COBJ's <i>category</i> keyword
    */
   public @Nullable String getCategoryFormId() {
-    JsonNode cat = node.get(FLD_CATEGORY);
+    JsonNode cat = node.get(FLD_RECIPE_FILTERS);
     if (null == cat) {
       return null;
     }

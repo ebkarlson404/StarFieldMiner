@@ -1,46 +1,50 @@
-import java.io.IOException;
-import java.io.PrintStream;
 import miner.ShipWeaponMiner;
 import parser.ESMJsonParser;
+import util.Holder;
+
+import java.io.IOException;
+import java.io.PrintStream;
 
 public class StarfieldMiner {
-  public static void main(String[] args) {
-    // String dataMiner = args[0];
-    String filename1 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\AMMO.json";
-    String filename2 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\AVIF.json";
-    String filename3 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\COBJ.json";
-    String filename4 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\DMGT.json";
-    String filename5 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\EXPL.json";
-    String filename6 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\FLST.json";
-    String filename7 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\GBFM.json";
-    String filename8 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\GLOB.json";
-    String filename9 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\KYWD.json";
-    String filename10 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\PERK.json";
-    String filename11 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\PROJ.json";
-    String filename12 = "C:\\Users\\Eric Karlson\\Downloads\\xEdit_4.1.5a_EXPERIMENTAL\\JSON\\WEAP.json";
+    public static void main(String[] args) {
+        // String dataMiner = args[0];
+        String base = "C:\\Users\\Eric Karlson\\Documents\\Starfield\\JSON\\";
+        String filename1 = base + "AMMO.json";
+        String filename2 = base + "AVIF.json";
+        String filename3 = base + "COBJ.json";
+        String filename4 = base + "DMGT.json";
+        String filename5 = base + "EXPL.json";
+        String filename6 = base + "FLST.json";
+        String filename7 = base + "GBFM.json";
+        String filename8 = base + "GLOB.json";
+        String filename9 = base + "KYWD.json";
+        String filename10 = base + "PERK.json";
+        String filename11 = base + "PROJ.json";
+        String filename12 = base + "WEAP.json";
 
-    try (PrintStream output =
-        new PrintStream("C:\\Users\\Eric Karlson\\Downloads\\xEdit\\output.csv")) {
-      ESMJsonParser parser = new ESMJsonParser();
-      // for (int idx = 1; idx < args.length; idx++) {
-      //    parser.parse(args[idx]);
-      //
-      parser.parse(filename1);
-      parser.parse(filename2);
-      parser.parse(filename3);
-      parser.parse(filename4);
-      parser.parse(filename5);
-      parser.parse(filename6);
-      parser.parse(filename7);
-      parser.parse(filename8);
-      parser.parse(filename9);
-      parser.parse(filename10);
-      parser.parse(filename11);
-      parser.parse(filename12);
-      ShipWeaponMiner miner = new ShipWeaponMiner();
-      miner.run(parser, output);
-    } catch (IOException e) {
-      System.out.println("StarField <filename>: error opening file: " + e.getMessage());
+        Holder<String> current = new Holder<>();
+        try (PrintStream output =
+                     new PrintStream(base + "..\\output.csv")) {
+            ESMJsonParser parser = new ESMJsonParser();
+            // for (int idx = 1; idx < args.length; idx++) {
+            //    parser.parse(args[idx]);
+            //
+            parser.parse(filename1, current);
+            parser.parse(filename2, current);
+            parser.parse(filename3, current);
+            parser.parse(filename4, current);
+            parser.parse(filename5, current);
+            parser.parse(filename6, current);
+            parser.parse(filename7, current);
+            parser.parse(filename8, current);
+            parser.parse(filename9, current);
+            parser.parse(filename10, current);
+            parser.parse(filename11, current);
+            parser.parse(filename12, current);
+            ShipWeaponMiner miner = new ShipWeaponMiner();
+            miner.run(parser, output);
+        } catch (IOException e) {
+            System.out.println("StarField " + current.get() + ": error opening file: " + e.getMessage());
+        }
     }
-  }
 }

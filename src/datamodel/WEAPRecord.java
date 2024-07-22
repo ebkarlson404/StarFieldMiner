@@ -20,7 +20,7 @@ public class WEAPRecord extends Record {
   private static final String FLD_KWDA = "KWDA - Keywords";
   private static final String FLD_KEYWORD = "Keyword";
   private static final String FLD_WDMG = "WDMG - Damage";
-  private static final String FLD_ATTACK_DAMAGE = "Attack Damage";
+  private static final String FLD_BASE_DAMAGE = "Base Damage";
   private static final String FLD_MIN_RANGE = "Range - Min";
   private static final String FLD_MAX_RANGE = "Range - Max";
   private static final String FLD_CRIT_DAMAGE_MULT = "Crit Damage Mult";
@@ -134,7 +134,7 @@ public class WEAPRecord extends Record {
     if (null == wdmg) {
       return 0;
     }
-    JsonNode dmg = wdmg.get(FLD_ATTACK_DAMAGE);
+    JsonNode dmg = wdmg.get(FLD_BASE_DAMAGE);
     return Util.asInt(dmg, 0);
   }
 
