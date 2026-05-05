@@ -52,12 +52,12 @@ public class ESMJsonParser {
 
   /**
    * Construct a parser for a given ESM JSON Dump File. The parser maintains internal state to track
-   * all records discovered, cumulatively, by each call to {@link #parse(String)}.
+   * all records discovered, cumulatively, by each call to {@link #parse(String,Holder)}.
    *
    * @see #findRecordByEditorId(String, Class)
    * @see #findRecordByFormId(String, Class)
    * @see #getGroup(Class)
-   * @see #parse(String)
+   * @see #parse(String,Holder)
    */
   public ESMJsonParser() {}
 
