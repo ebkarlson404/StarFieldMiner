@@ -9,7 +9,7 @@ import parser.ESMJsonParser;
  *
  * @author Eric Karlson
  */
-public class AVIFRecord extends Record {
+public class AVIFRecord extends BGSRecord {
   public static final String HEALTH_FID = "000002D4";
   public static final String SPACESHIP_PART_MASS_FID = "0000ACDB";
   public static final String SPACESHIP_CREW_RATING_FID = "00019080";

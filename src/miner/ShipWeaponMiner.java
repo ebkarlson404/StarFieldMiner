@@ -1,7 +1,7 @@
 package miner;
 
 import datamodel.COBJRecord;
-import datamodel.Record;
+import datamodel.BGSRecord;
 import java.io.PrintStream;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +32,7 @@ public class ShipWeaponMiner implements IDataMiner {
   @Override
   public void run(@NotNull ESMJsonParser parser, @NotNull PrintStream output) {
     ShipWeapon.emitHeaders(output);
-    List<Record> group = parser.getGroup(COBJRecord.class);
+    List<BGSRecord> group = parser.getGroup(COBJRecord.class);
     Holder<Integer> cnt = new Holder(0);
     group
         .iterator()

@@ -10,7 +10,7 @@ import parser.ESMJsonParser;
  * @author Eric Karlson
  */
 @ESMGroup(value = "KYWD")
-public class KYWDRecord extends Record {
+public class KYWDRecord extends BGSRecord {
   private static final String FLD_KEYWORD_TYPE = "TNAM - Type";
   private static final String KEYWORD_TYPE_SHIP_MODULE_CLASS = "Ship Module Class";
   private static final String KEYWORD_TYPE_MANUFACTURER = "Manufacturer";

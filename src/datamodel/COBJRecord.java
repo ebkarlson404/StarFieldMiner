@@ -13,7 +13,7 @@ import parser.Util;
  * @author Eric Karlson
  */
 @ESMGroup(value = "COBJ")
-public class COBJRecord extends Record {
+public class COBJRecord extends BGSRecord {
   private static final String FLD_CONDITIONS = "Conditions";
   private static final String FLD_CONDITION = "Condition";
   private static final String FLD_REQD_PERKS = "RQPK - Required Perks";
@@ -235,12 +235,12 @@ public class COBJRecord extends Record {
    * Retrieve the type of objected created by this COBJ record.
    *
    * @param clazz The expected {@link Class} of the created object, or {@code Record.class} for any
-   *     type of {@link Record}
+   *     type of {@link BGSRecord}
    * @param <T> The expected class of the created object
-   * @return The {@link Record} for the type of created object, or {@code null} if one cannot be
+   * @return The {@link BGSRecord} for the type of created object, or {@code null} if one cannot be
    *     found
    */
-  public <T extends Record> @Nullable T getCreatedObject(@NotNull Class<T> clazz) {
+  public <T extends BGSRecord> @Nullable T getCreatedObject(@NotNull Class<T> clazz) {
     // Find the FormID for the Created Object
     JsonNode formId = node.get(FLD_CREATED_OBJECT);
     if (null == formId || !formId.isTextual()) {

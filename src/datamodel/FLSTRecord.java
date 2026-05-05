@@ -11,7 +11,7 @@ import parser.Util;
  * @author Eric Karlson
  */
 @ESMGroup(value = "FLST")
-public class FLSTRecord extends Record {
+public class FLSTRecord extends BGSRecord {
   private static final String FLD_FORM_IDS = "FormIDs";
   private static final String FLD_LNAM = "LNAM - FormID";
 
@@ -33,7 +33,7 @@ public class FLSTRecord extends Record {
    *     there is none
    * @param <T> The expected class of the referenced form
    */
-  public <T extends Record> T at(int idx, Class<T> clazz) {
+  public <T extends BGSRecord> T at(int idx, Class<T> clazz) {
     JsonNode forms = node.get(FLD_FORM_IDS);
     if (null == forms) {
       return null;

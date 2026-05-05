@@ -20,7 +20,7 @@ import java.util.function.Predicate;
  * @author Eric Karlson
  */
 @ESMGroup(value = "GBFM")
-public class GBFMRecord extends Record {
+public class GBFMRecord extends BGSRecord {
     private static final String FLD_COMPONENTS = "Base Form Components";
     private static final String FLD_COMPONENT = "Component";
     private static final String FLD_COMPONENT_DATA_FULL_NAME = "Component Data - Fullname";

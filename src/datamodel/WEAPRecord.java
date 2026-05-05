@@ -15,7 +15,7 @@ import util.ESMKeyValueMap;
  * @author Eric Karlson
  */
 @ESMGroup(value = "WEAP")
-public class WEAPRecord extends Record {
+public class WEAPRecord extends BGSRecord {
   private static final String FLD_KEYWORDS = "Keywords";
   private static final String FLD_KWDA = "KWDA - Keywords";
   private static final String FLD_KEYWORD = "Keyword";

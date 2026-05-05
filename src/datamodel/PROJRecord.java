@@ -12,7 +12,7 @@ import parser.Util;
  * @author Eric Karlson
  */
 @ESMGroup(value = "PROJ")
-public class PROJRecord extends Record {
+public class PROJRecord extends BGSRecord {
   private static final String FLD_PROD = "PROD - Data";
   private static final String FLD_FLAGS = "Flags";
   private static final String FLD_SPEED = "Speed";

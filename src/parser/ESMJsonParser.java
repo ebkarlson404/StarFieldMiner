@@ -3,7 +3,7 @@ package parser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import datamodel.ESMGroup;
-import datamodel.Record;
+import datamodel.BGSRecord;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
@@ -21,17 +21,17 @@ import util.Holder;
  */
 public class ESMJsonParser {
 
-  /** Maps FormID's to {@link Record}'s */
-  private final Map<String, Record> recordsByFormId = new HashMap<>();
+  /** Maps FormID's to {@link BGSRecord}'s */
+  private final Map<String, BGSRecord> recordsByFormId = new HashMap<>();
 
-  /** Maps Editor ID's to {@link Record}'s */
-  private final Map<String, Record> recordsByEditorId = new HashMap<>();
+  /** Maps Editor ID's to {@link BGSRecord}'s */
+  private final Map<String, BGSRecord> recordsByEditorId = new HashMap<>();
 
-  /** Maps Record Signature to all {@link Record}'s that have that signature */
-  private final Map<String, List<Record>> recordsBySignature = new HashMap<>();
+  /** Maps Record Signature to all {@link BGSRecord}'s that have that signature */
+  private final Map<String, List<BGSRecord>> recordsBySignature = new HashMap<>();
 
   /**
-   * A callback class passed to the {@link Record}'s constructor to register the new {@link Record}
+   * A callback class passed to the {@link BGSRecord}'s constructor to register the new {@link BGSRecord}
    * with the {@link ESMJsonParser} that created it *
    */
   public static class ParserRegistrar {
@@ -41,7 +41,7 @@ public class ESMJsonParser {
       this.parser = parser;
     }
 
-    public void register(@NotNull Record record) {
+    public void register(@NotNull BGSRecord record) {
       parser.registerRecord(record);
     }
 
@@ -98,26 +98,26 @@ public class ESMJsonParser {
   }
 
   /**
-   * Called by the {@link Record} constructor to register the new record with this parser
+   * Called by the {@link BGSRecord} constructor to register the new record with this parser
    *
-   * @param rec The new {@link Record} to register
+   * @param rec The new {@link BGSRecord} to register
    */
-  private void registerRecord(@NotNull Record rec) {
+  private void registerRecord(@NotNull BGSRecord rec) {
     recordsByFormId.put(rec.getFormId(), rec);
     recordsByEditorId.put(rec.getEditorId(), rec);
-    List<Record> records =
+    List<BGSRecord> records =
         recordsBySignature.computeIfAbsent(rec.getSignature(), k -> new ArrayList<>());
     records.add(rec);
   }
 
   /**
-   * Find all {@link Record}'s that of a particular type
+   * Find all {@link BGSRecord}'s that of a particular type
    *
-   * @param clazz The {@link Class} of {@link Record} objects that we want
-   * @param <T> The type of {@link Record} that we are interested in
-   * @return A list of all {@link Record}'s of the indicated type
+   * @param clazz The {@link Class} of {@link BGSRecord} objects that we want
+   * @param <T> The type of {@link BGSRecord} that we are interested in
+   * @return A list of all {@link BGSRecord}'s of the indicated type
    */
-  public <T extends Record> @NotNull List<Record> getGroup(@NotNull Class<T> clazz) {
+  public <T extends BGSRecord> @NotNull List<BGSRecord> getGroup(@NotNull Class<T> clazz) {
     ESMGroup group =
         Assert.assertNotNull(
             clazz.getAnnotation(ESMGroup.class), "class must have an @ESMGroup annotation");
@@ -125,31 +125,31 @@ public class ESMJsonParser {
   }
 
   /**
-   * Finds a {@link Record} by its FormID
+   * Finds a {@link BGSRecord} by its FormID
    *
    * @param formId The FormID for the record of interest
    * @param clazz The expected {@link Class} of the record, or {@code Record.class} for any type of
    *     record
    * @param <T> The expected class of the record
-   * @return The {@link Record} with the indicated FormID, or {@code null} if there is no such
+   * @return The {@link BGSRecord} with the indicated FormID, or {@code null} if there is no such
    *     record
    */
-  public <T extends Record> @Nullable T findRecordByFormId(
+  public <T extends BGSRecord> @Nullable T findRecordByFormId(
       @NotNull String formId, @NotNull Class<T> clazz) {
     return Util.cast(recordsByFormId.get(formId), clazz);
   }
 
   /**
-   * Finds a {@link Record} by its EditorID
+   * Finds a {@link BGSRecord} by its EditorID
    *
    * @param editorId The EditorID for the record of interest
    * @param clazz The expected {@link Class} of the record, or {@code Record.class} for any type of
    *     record
    * @param <T> The expected class of the record
-   * @return The {@link Record} with the indicated FormID, or {@code null} if there is no such
+   * @return The {@link BGSRecord} with the indicated FormID, or {@code null} if there is no such
    *     record
    */
-  public <T extends Record> @Nullable T findRecordByEditorId(
+  public <T extends BGSRecord> @Nullable T findRecordByEditorId(
       @NotNull String editorId, @NotNull Class<T> clazz) {
     return Util.cast(recordsByEditorId.get(editorId), clazz);
   }

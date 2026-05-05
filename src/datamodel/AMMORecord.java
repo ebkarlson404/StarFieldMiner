@@ -10,7 +10,7 @@ import parser.ESMJsonParser;
  * @author Eric Karlson
  */
 @ESMGroup(value = "AMMO")
-public class AMMORecord extends Record {
+public class AMMORecord extends BGSRecord {
   private static final String FLD_DNAM = "DNAM - DNAM";
   private static final String FLD_PROJECTILE = "Projectile";
 

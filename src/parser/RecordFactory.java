@@ -49,7 +49,7 @@ public class RecordFactory {
    * @throws IllegalAccessException
    * @throws NoSuchMethodException
    */
-  public static Record createRecord(
+  public static BGSRecord createRecord(
       @NotNull String formId,
       @NotNull String editorId,
       @NotNull String signature,
@@ -69,7 +69,7 @@ public class RecordFactory {
             String.class,
             JsonNode.class,
             ESMJsonParser.ParserRegistrar.class);
-    return (Record) constructor.newInstance(formId, editorId, signature, node, registrar);
+    return (BGSRecord) constructor.newInstance(formId, editorId, signature, node, registrar);
   }
 
   /**
@@ -80,21 +80,21 @@ public class RecordFactory {
    *     registration
    * @return The derived {@link Record} object
    */
-  public static @NotNull Record fromESMJsonObject(
+  public static @NotNull BGSRecord fromESMJsonObject(
       @NotNull JsonNode node, @NotNull ESMJsonParser.ParserRegistrar registrar) {
     // All Record objects must have a "Record Header" property
     Assert.assertTrue(node.isObject(), "Record objets must be of type 'Object'");
     JsonNode recordHdr =
-        Assert.assertNotNull(node.get(Record.FLD_RECORD_HDR), "Missing " + Record.FLD_RECORD_HDR);
+        Assert.assertNotNull(node.get(BGSRecord.FLD_RECORD_HDR), "Missing " + BGSRecord.FLD_RECORD_HDR);
     Assert.assertTrue(recordHdr.isObject(), "Record Headers must be Json Objects");
     JsonNode formId =
-        Assert.assertNotNull(recordHdr.get(Record.FLD_FORM_ID), "Missing " + Record.FLD_FORM_ID);
+        Assert.assertNotNull(recordHdr.get(BGSRecord.FLD_FORM_ID), "Missing " + BGSRecord.FLD_FORM_ID);
     Assert.assertTrue(formId.isTextual(), "Form IDs must be Json Strings");
     JsonNode signature =
         Assert.assertNotNull(
-            recordHdr.get(Record.FLD_SIGNATURE), "Missing " + Record.FLD_SIGNATURE);
+            recordHdr.get(BGSRecord.FLD_SIGNATURE), "Missing " + BGSRecord.FLD_SIGNATURE);
     Assert.assertTrue(signature.isTextual(), "Signatures must be Json Strings");
-    JsonNode editorId = node.get(Record.FLD_EDITOR_ID);
+    JsonNode editorId = node.get(BGSRecord.FLD_EDITOR_ID);
     String editId = (null != editorId) ? editorId.asText() : "<no-edit-id>";
 
     try {

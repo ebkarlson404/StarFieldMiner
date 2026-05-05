@@ -12,7 +12,7 @@ import util.ESMKeyValueMap;
  * @author Eric Karlson
  */
 @ESMGroup(value = "EXPL")
-public class EXPLRecord extends Record {
+public class EXPLRecord extends BGSRecord {
   private static final String FLD_ENAM = "ENAM - Data";
   private static final String FLD_ATTACK_DAMAGE = "Unknown #2";
   private static final String FLD_DAMA = "DAMA - Damage Types";

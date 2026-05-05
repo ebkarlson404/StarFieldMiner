@@ -10,7 +10,7 @@ import parser.ESMJsonParser;
  * @author Eric Karlson
  */
 @ESMGroup(value = "PERK")
-public class PERKRecord extends Record {
+public class PERKRecord extends BGSRecord {
   public static final String SKILL_STARSHIP_DESIGN_FID = "002C59DC";
 
   public PERKRecord(

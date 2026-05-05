@@ -10,7 +10,7 @@ import parser.ESMJsonParser;
  * @author Eric Karlson
  */
 @ESMGroup("GLOB")
-public class GLOBRecord extends Record {
+public class GLOBRecord extends BGSRecord {
   public static final String UC02_UC_SHIP_COMPONENTS_UNLOCKED = "0010DA30";
   public static final String SHIP_BUILDER_ALLOW_LARGE_MODS = "00155F4A";
   public static final String SHIP_BUILDER_TEST_MODS = "00141C71";

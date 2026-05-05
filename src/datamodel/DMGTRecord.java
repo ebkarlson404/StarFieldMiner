@@ -9,7 +9,7 @@ import parser.ESMJsonParser;
  *
  * @author Eric Karlson
  */
-public class DMGTRecord extends Record {
+public class DMGTRecord extends BGSRecord {
   public static final String SHIELD_FID = "0001EDE8";
   public static final String ELECTROMAGNETIC_FID = "00023190";
 

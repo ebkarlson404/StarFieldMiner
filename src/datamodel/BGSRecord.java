@@ -9,7 +9,7 @@ import parser.ESMJsonParser;
  *
  * @author Eric Karlson
  */
-public class Record extends JsonNodeWrapper {
+public class BGSRecord extends JsonNodeWrapper {
   public static String FLD_RECORD_HDR = "Record Header";
   public static String FLD_SIGNATURE = "Signature";
   public static String FLD_FORM_ID = "FormID";
@@ -20,7 +20,7 @@ public class Record extends JsonNodeWrapper {
   protected final String signature;
   protected final ESMJsonParser parser;
 
-  public Record(
+  public BGSRecord(
       @NotNull String formId,
       @NotNull String editorId,
       @NotNull String signature,
