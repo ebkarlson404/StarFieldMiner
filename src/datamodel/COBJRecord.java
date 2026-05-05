@@ -2,10 +2,13 @@ package datamodel;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.*;
+
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import parser.ESMJsonParser;
 import parser.Util;
+import util.ESMKeyValueMap;
 
 /**
  * Abstraction of the COBJ records
@@ -17,7 +20,7 @@ public class COBJRecord extends BGSRecord {
   private static final String FLD_CONDITIONS = "Conditions";
   private static final String FLD_CONDITION = "Condition";
   private static final String FLD_REQD_PERKS = "RQPK - Required Perks";
-  private static final String FLD_REQUIRED_PERK_FMT = "Required Perk #%d";
+  private static final String FLD_REQUIRED_PERK = "Required Perk";
   private static final String FLD_CREATED_OBJECT = "CNAM - Created Object";
   private static final String FLD_COST_DATA = "DATA - Value";
   private static final String FLD_RECIPE_FILTERS = "FNAM - Recipe Filters";
@@ -207,22 +210,23 @@ public class COBJRecord extends BGSRecord {
    * @return An {@link Iterator} for the enumerated {@link RequiredPerk}'s
    */
   public @NotNull Iterator<RequiredPerk> getRequiredPerks() {
+    final ESMJsonParser thisParser = this.parser;
     final JsonNode perks = node.get(FLD_REQD_PERKS);
     if (null == perks) {
       return Collections.emptyIterator();
     }
-    final ESMJsonParser thisParser = this.parser;
+
     return new Iterator<>() {
-      private int idx = 0;
+      private int idx = 1;
 
       @Override
       public boolean hasNext() {
-        return null != perks.get(String.format(FLD_REQUIRED_PERK_FMT, idx));
+        return null != perks.get(ESMKeyValueMap.generateRepeatedKey(FLD_REQUIRED_PERK, idx));
       }
 
       @Override
       public RequiredPerk next() {
-        JsonNode perk = perks.get(String.format(FLD_REQUIRED_PERK_FMT, idx++));
+        JsonNode perk = perks.get(ESMKeyValueMap.generateRepeatedKey(FLD_REQUIRED_PERK, idx++));
         if (null == perk) {
           throw new NoSuchElementException();
         }
