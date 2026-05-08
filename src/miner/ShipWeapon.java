@@ -102,11 +102,11 @@ public class ShipWeapon {
                 starshipEng.set(rp.getRank());
               } else {
                 PERKRecord perk = Assert.assertNotNull(rp.getPerk(), "Cannot find PERK in " + rp);
+                otherPerks.append(sep.get());
+                sep.set(", ");
                 otherPerks.append(perk.getFullName());
                 otherPerks.append(" >= ");
                 otherPerks.append(rp.getRank());
-                otherPerks.append(sep.get());
-                sep.set(", ");
               }
             });
     this.minStarshipEng = starshipEng.getWithDefault(0);
