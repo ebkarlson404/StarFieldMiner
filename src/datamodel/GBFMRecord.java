@@ -301,10 +301,10 @@ public class GBFMRecord extends BGSRecord {
     public String getManufacturer() {
         Component comp = findComponent(COMP_TYPE_KEYWORDS);
         if (null == comp) {
-            return null;
+            return "<none>";
         }
         KYWDRecord kywd = comp.getKeywordTag(KYWDRecord::isShipModuleCorpNameKeyword);
-        return (null != kywd) ? kywd.getFullName() : null;
+        return (null != kywd) ? kywd.getFullName() : "<none>";
     }
 
     /**

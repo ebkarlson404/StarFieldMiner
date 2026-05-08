@@ -26,7 +26,8 @@ public class WEAPRecord extends BGSRecord {
   private static final String FLD_CRIT_DAMAGE_MULT = "Crit Damage Mult";
   private static final String FLD_DAMA = "DAMA - Damage Types";
   private static final String FLD_DAMAGE_TYPE = "Damage Type";
-  private static final String FLD_VALUE = "Value";
+  private static final String FLD_TYPE = "Type";
+  private static final String FLD_AMOUNT = "Amount";
   private static final String FLD_QNAM = "QNAM - Power";
   private static final String FLD_RECHARGE_TIME = "Recharge time";
   private static final String FLD_RECHARGE_DELAY = "Recharge delay";
@@ -178,9 +179,9 @@ public class WEAPRecord extends BGSRecord {
     for (int idx = 1;
         null != (dmg = dama.get(ESMKeyValueMap.generateRepeatedKey(FLD_DAMAGE_TYPE, idx)));
         idx++) {
-      JsonNode dtype = dmg.get(FLD_DAMAGE_TYPE);
+      JsonNode dtype = dmg.get(FLD_TYPE);
       if (null != dtype && damageTypeFormId.equals(dtype.asText())) {
-        JsonNode value = dmg.get(FLD_VALUE);
+        JsonNode value = dmg.get(FLD_AMOUNT);
         return Util.asInt(value, 0);
       }
     }
