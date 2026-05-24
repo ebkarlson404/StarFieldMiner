@@ -14,10 +14,11 @@ import util.ESMKeyValueMap;
 @ESMGroup(value = "EXPL")
 public class EXPLRecord extends BGSRecord {
   private static final String FLD_ENAM = "ENAM - Data";
-  private static final String FLD_ATTACK_DAMAGE = "Unknown #2";
+  private static final String FLD_ATTACK_DAMAGE = "Damage";
   private static final String FLD_DAMA = "DAMA - Damage Types";
   private static final String FLD_DAMAGE_TYPE = "Damage Type";
-  private static final String FLD_VALUE = "Value";
+  private static final String FLD_TYPE = "Type";
+  private static final String FLD_AMOUNT = "Amount";
 
   public EXPLRecord(
       @NotNull String formId,
@@ -50,9 +51,9 @@ public class EXPLRecord extends BGSRecord {
     for (int idx = 1;
         null != (dmg = dama.get(ESMKeyValueMap.generateRepeatedKey(FLD_DAMAGE_TYPE, idx)));
         idx++) {
-      JsonNode dtype = dmg.get(FLD_DAMAGE_TYPE);
+      JsonNode dtype = dmg.get(FLD_TYPE);
       if (null != dtype && damageTypeFormId.equals(dtype.asText())) {
-        JsonNode value = dmg.get(FLD_VALUE);
+        JsonNode value = dmg.get(FLD_AMOUNT);
         return Util.asInt(value, 0);
       }
     }
